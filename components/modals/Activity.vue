@@ -98,8 +98,8 @@
         </template>
       </b-table>
 
-      <p>Total Price: {{ calculateTotal }} {{ settings.currency }}</p>
-      <p>Your Balance: {{ currencyBalance }} {{ settings.currency }}</p>
+      <p>Total Price: {{ calculateTotal }} {{ settings?.currency ?? 'default value' }}</p>
+      <p>Your Balance: {{ currencyBalance }} {{ settings?.currency ?? 'default value' }}</p>
 
       <template #modal-footer>
         <b-button variant="info" :disabled="modalBusy || calculateTotal > currencyBalance" @click.prevent="buyNFT">
@@ -124,7 +124,7 @@
 
     <b-modal id="changePriceModal" body-class="activity-modal" size="lg" centered title="Change Price">
       <b-form-group description="Enter the amount you want to sell each individual NFTs for" label="New Price">
-        <b-input-group :append="settings.currency">
+        <b-input-group :append="settings?.currency ?? 'defaultCurrency'">
           <b-form-input v-model.number="newPrice" type="number" trim :state="$v.newPrice.$dirty ? !$v.newPrice.$error : null" />
         </b-input-group>
       </b-form-group>
@@ -293,7 +293,7 @@ export default {
       }
 
       if (modalId === 'buyModal') {
-        const balance = await this.$sidechain.getBalance(this.$auth.user.username, this.settings.currency)
+        const balance = await this.$sidechain.getBalance(this.$auth.user.username, 'DATA')
 
         this.currencyBalance = balance ? Number(balance.balance) : 0
       }

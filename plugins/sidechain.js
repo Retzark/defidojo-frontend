@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export default ({ store }, inject) => {
-  const { nft_symbol: nftSymbol, sidechain_rpc: rpcNode } = store.state.settings
+  const { nft_symbol: nftSymbol = 'DATA', sidechain_rpc: rpcNode = 'https://enginerpc.com' } = store.state.settings ?? {};
 
   const sidechain = {
     async call (endpoint, request) {
@@ -13,6 +13,7 @@ export default ({ store }, inject) => {
 
       let result = null
 
+      console.log(`${rpcNode}/${endpoint}`)
       const query = await axios.post(`${rpcNode}/${endpoint}`, postData, {
         headers: {
           'Content-Type': 'application/json',

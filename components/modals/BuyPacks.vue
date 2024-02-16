@@ -1,7 +1,7 @@
 <template>
   <b-modal id="buyPacksModal" centered size="lg" title="Buy Packs">
     <b-row align-h="center">
-      <b-col v-for="(pack, i) of settings.packs" :key="i" sm="6" class="mt-3">
+      <b-col v-for="(pack, i) of settings?.packs" :key="i" sm="6" class="mt-3">
         <div class="pack" :class="{selected: pack.symbol === symbol}" @click="symbol = pack.symbol">
           <img :src="pack.image" :alt="`${pack.symbol} Icon`">
 
@@ -44,7 +44,7 @@
     </div>
 
     <div class="d-flex justify-content-around mt-3">
-      <template v-for="(bonus,b) of settings.bonuses">
+      <template v-for="(bonus,b) of settings?.bonuses">
         <b-button
           :key="b"
           v-b-tooltip.hover.v-info
@@ -125,11 +125,11 @@ export default {
     ...mapGetters(['settings']),
 
     currencies () {
-      return this.settings.currencies.map(c => ({ ...c, name: `${c.name} (${c.symbol})` }))
+      return this.settings?.currencies.map(c => ({ ...c, name: `${c.name} (${c.symbol})` }))
     },
 
     totalPayable () {
-      const pack = this.settings.packs.find(p => p.symbol === this.symbol)
+      const pack = this.settings?.packs.find(p => p.symbol === this.symbol)
 
       if (pack && pack.price) {
         return this.quantity * pack.price
@@ -139,11 +139,11 @@ export default {
     },
 
     paypalScript () {
-      return `https://www.paypal.com/sdk/js?client-id=${this.settings.paypal_client_id}&disable-funding=credit`
+      // return `https://www.paypal.com/sdk/js?client-id=${this.settings?.paypal_client_id}&disable-funding=credit`
     },
 
     bonusQuantity () {
-      const bonus = this.settings.bonuses.reduce((acc, cur) => {
+      const bonus = this.settings?.bonuses.reduce((acc, cur) => {
         if (this.quantity >= cur[0]) {
           acc = this.quantity * cur[1]
         }
@@ -184,7 +184,7 @@ export default {
 
     onModalShow (btnEvent, modalId) {
       if (modalId === 'buyPacksModal') {
-        this.symbol = this.settings.packs[0].symbol
+        this.symbol = this.settings?.packs[0].symbol
         this.quantity = 1
         this.currency = 'HIVE'
         this.modalBusy = false

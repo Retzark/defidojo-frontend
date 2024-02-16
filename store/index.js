@@ -19,7 +19,11 @@ const requestKeychain = (fn, ...args) => {
 
 export const state = () => {
   return {
-    settings: {},
+    settings: {
+      rpcNode: 'https://enginerpc.com',
+      symbol: 'PAL',
+      currency: 'USD'
+    },
     types: []
   }
 }
@@ -48,8 +52,9 @@ export const mutations = {
 export const actions = {
   async fetchSettings ({ commit }) {
     try {
-      const settings = await this.$axios.$get('settings')
+      // const settings = await this.$axios.$get('settings')
 
+      const settings = await null
       commit('SET_SETTINGS', settings)
     } catch (e) {
       console.log(e.message)
