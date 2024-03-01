@@ -112,7 +112,7 @@ export default {
 
   data () {
     return {
-      symbol: '',
+      symbol: 'DATA',
       quantity: 1,
 
       currency: 'HIVE',
@@ -129,12 +129,6 @@ export default {
     },
 
     totalPayable () {
-      const pack = this.settings.packs.find(p => p.symbol === this.symbol)
-
-      if (pack && pack.price) {
-        return this.quantity * pack.price
-      }
-
       return 0
     },
 
@@ -143,13 +137,7 @@ export default {
     },
 
     bonusQuantity () {
-      const bonus = this.settings.bonuses.reduce((acc, cur) => {
-        if (this.quantity >= cur[0]) {
-          acc = this.quantity * cur[1]
-        }
-
-        return acc
-      }, 0)
+      const bonus = 0
 
       return this.toFixedWithoutRounding(bonus, 0)
     }

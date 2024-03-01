@@ -49,7 +49,7 @@ if (!Vue.__myGlobalMixin__) {
       },
 
       sleep (ms) {
-        return new Promise(resolve => setTimeout(resolve, ms))
+        // return new Promise(resolve => setTimeout(resolve, ms))
       },
 
       toFixedWithoutRounding (t, l = 3) {
